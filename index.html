@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Anniversary Memory App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <!-- React & ReactDOM CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <!-- Styled Components -->
+  <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
+  <!-- Framer Motion -->
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
+  <style>
+    /* ===== Global Styles ===== */
+    body {
+      font-family: 'Tajawal', 'Cairo', Arial, sans-serif;
+      margin: 0;
+      direction: rtl;
+      background: #fffdfa;
+      scroll-behavior: smooth;
+    }
+    * { box-sizing: border-box; }
+    ::-webkit-scrollbar { width: 0; }
+    /* ===== Landing Screen ===== */
+    .landing {
+      height: 100vh;
+      min-height: 650px;
+      background: linear-gradient(160deg, #f2e9e4 0%, #fadcd9 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .main-date { font-size: 32px; font-weight: bold; margin-bottom: 16px; color: #966986; }
+    .live-timer { font-size: 24px; font-weight: bold; margin-bottom: 20px; color: #a47895; letter-spacing: 1.5px; }
+    .love-text { font-size: 22px; font-weight: 400; margin-bottom: 0; color: #b08ea2; text-align: center; }
+    .down-arrow { position: absolute; bottom: 33px; }
+    .arrow-animated { animation: bounce 2s infinite; color: #b08ea2; font-size: 2.3rem; }
+    @keyframes bounce { 0%,100%{transform:translateY(0);} 60%{transform:translateY(14px);} }
+    /* ===== Wavy Memories ===== */
+    .wavy-section { background: #fffdfa; min-height: 900px; padding: 90px 0 130px; position: relative; overflow: visible; }
+    .wavy-svg { z-index: 0; left: 52%; top: 40px; pointer-events: none; position: absolute; }
+    .memories-list { position: relative; margin-left: 51.6%; }
+    .memory-item-container { position: relative; min-height: 150px; width: 460px; }
+    .memory-item { display: flex; flex-direction: row; align-items: center; margin-bottom: 55px; z-index: 2; gap: 18px; }
+    .img-frame { width: 105px; height: 105px; border-radius: 50%; overflow: hidden; border: 4px solid #e9cdd4; box-shadow: 0 4px 14px #fadcd93a,0 2px 8px #b08ea231; flex-shrink: 0; }
+    .img-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .story { font-size: 20px; background: #fffdfa; padding: 16px 22px; border-radius: 10px; color: #867097; font-weight: 500; box-shadow: 0 2px 6px #fadcd95d; }
+    /* ===== Final Section ===== */
+    .final-section { min-height: 430px; background: linear-gradient(160deg, #fadcd9 0%, #f2e9e4 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 85px 0 90px; }
+    .big-sentence { font-size: 31px; margin-bottom: 34px; font-weight: 700; color: #b08ea2; text-align: center; line-height: 1.5; letter-spacing: 0.6px; }
+    /* ===== Closing Touch ===== */
+    .closing-touch { height: 160px; background: linear-gradient(90deg, #b9bcc5 0%, #f6edf2 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .beautiful-btn { padding: 18px 48px; background: #e2b4bd; color: #fff; border: none; border-radius: 30px; font-size: 22px; font-weight: 500; margin-bottom: 18px; box-shadow: 0 4px 14px #f9c6db36; cursor: pointer; transition: background 0.2s; }
+    .beautiful-btn:hover { background: #db99af; }
+    .moon-text { font-size: 18px; color: #9b9a96; margin-top: 12px; text-align: center; font-weight: 400; letter-spacing: 0.1px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/javascript">
+    const { useState, useEffect, useRef } = React;
+    const { motion } = window['framer-motion'];
+    const styled = window.styled;
+
+    function LandingScreen({scrollToRef}) {
+      const startDate = "2023-05-12T00:00:00Z";
+      const calculateDuration = (fromDate) => {
+        const from = new Date(fromDate);
+        const now = new Date();
+        let diff = now - from;
+        const seconds = Math.floor((diff / 1000) % 60);
+        const minutes = Math.floor((diff / (1000*60)) % 60);
+        const hours = Math.floor((diff / (1000*60*60)) % 24);
+        const days = Math.floor(diff / (1000*60*60*24));
+        const months = Math.floor(days / 30.4375);
+        const years = Math.floor(months / 12);
+        const monthsDisplay = months % 12;
+        return {
+          years,
+          months: monthsDisplay,
+          days: days % 30,
+          hours,
+          minutes,
+          seconds,
+          totalDays: days,
+          allMonths: months + years*12
+        };
+      };
+      const [duration, setDuration] = useState(calculateDuration(startDate));
+      useEffect(()=>{
+        const interval = setInterval(()=>setDuration(calculateDuration(startDate)),1000);
+        return ()=>clearInterval(interval);
+      },[]);
+      return (
+        <div className="landing">
+          <div className="main-date">{`${duration.totalDays} يوم | ${duration.allMonths} شهر | ${duration.years} سنة – و`}</div>
+          <div className="live-timer">{`${String(duration.days).padStart(2,'0')} يوم، ${String(duration.hours).padStart(2,'0')} ساعة، ${String(duration.minutes).padStart(2,'0')} دقيقة، ${String(duration.seconds).padStart(2,'0')} ثانية`}</div>
+          <div className="love-text">سنتين و لسه كل يوم بحبك أكتر</div>
+          <div className="down-arrow" onClick={()=>scrollToRef.current.scrollIntoView({behavior:"smooth"})}>
+            <span className="arrow-animated">&#8595;</span>
+          </div>
+        </div>
+      );
+    }
+
+    function WavyMemories() {
+      const memories = [
+        { image: "/images/1.jpg", story: "أول صورة لنا معاً 🥰" },
+        { image: "/images/2.jpg", story: "ضحكتك يومها كانت روحي" },
+        { image: "/images/3.jpg", story: "أحلى سفرة لنا" },
+        { image: "/images/4.jpg", story: "لحظة غروب خرافية" },
+        { image: "/images/5.jpg", story: "أول عزيمة عند أهلك" },
+        { image: "/images/6.jpg", story: "وقتكَنت زعلانة وأنا صلحتك" },
+        { image: "/images/7.jpg", story: "ذكريات العيد ولبسك المفضل" },
+      ];
+      return (
+        <div className="wavy-section">
+          <svg width="50" height={memories.length*320} className="wavy-svg">
+            <path d="M25,0 Q40,100 25,200 Q10,300 25,400 Q40,500 25,600 Q10,700 25,800 Q40,900 25,1000" stroke="#e9cdd4" strokeWidth={4} fill="none"/>
+          </svg>
+          <div className="memories-list">
+            {memories.map((mem,i)=>(
+              <div key={i} className="memory-item-container" style={{top:i*140}}>
+                <motion.div className="memory-item"
+                  initial={{ scale: 0.96, opacity: 0.6, filter:"brightness(0.8)" }}
+                  whileInView={{ scale:1.12, opacity:1, filter:"brightness(1.12)" }}
+                  transition={{ type: "spring", stiffness:240, damping:15 }}
+                  viewport={{ amount:0.5, once:true }}
+                >
+                  <div className="img-frame"><img src={mem.image} alt={mem.story} /></div>
+                  <motion.div className="story"
+                    initial={{opacity:0, y:40}}
+                    whileInView={{opacity:1, y:0}}
+                    transition={{delay:0.14, duration:0.7}}
+                  >{mem.story}</motion.div>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    function FinalSection() {
+      const sentences = [
+        "سنتين و كل مره نفس الانبهار لمن أشوفك",
+        "سنتين و نفس الإحساس مع أحبك",
+        "سنتين و انت روح روحي و قمري",
+        "سنتين و انت أساس سعادتي",
+        "سنتين و العمر لسه في أوله",
+      ];
+      return (
+        <div className="final-section">
+          {sentences.map((sentence,idx)=>(
+            <motion.div className="big-sentence" key={idx} initial={{opacity:0,y:40}} whileInView={{opacity:1,y:0}} transition={{delay:0.7+idx*1, duration:0.75}}>
+              {sentence}
+            </motion.div>
+          ))}
+        </div>
+      );
+    }
+
+    function ClosingTouch() {
+      return (
+        <div className="closing-touch">
+          <button className="beautiful-btn">لعام ثالث أجمل…</button>
+          <div className="moon-text">
+            Meeting you was the beginning of everything beautiful.
+            <span style={{fontSize:26, marginLeft:8}} role="img" aria-label="moon">&#127765;</span>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      const memoriesRef = useRef();
+      return (
+        <React.Fragment>
+          <LandingScreen scrollToRef={memoriesRef} />
+          <div ref={memoriesRef}></div>
+          <WavyMemories />
+          <FinalSection />
+          <ClosingTouch />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>
+</html>
