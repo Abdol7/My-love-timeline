@@ -1,0 +1,48 @@
+.landing {
+  height: 100vh;
+  min-height: 650px;
+  background: linear-gradient(160deg, #f2e9e4 0%, #fadcd9 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.main-date {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #966986;
+}
+
+.live-timer {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #a47895;
+  letter-spacing: 1.5px;
+}
+
+.love-text {
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 0;
+  color: #b08ea2;
+}
+
+.down-arrow {
+  position: absolute;
+  bottom: 33px;
+}
+
+.arrow-animated {
+  animation: bounce 2s infinite;
+  color: #b08ea2;
+  font-size: 2.3rem;
+}
+
+@keyframes bounce {
+  0%,100% {transform: translateY(0);}
+  60% {transform: translateY(14px);}
+}
