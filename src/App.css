@@ -1,0 +1,16 @@
+body {
+  font-family: "Tajawal", "Cairo", Arial, sans-serif;
+  margin: 0;
+  direction: rtl;
+  background: #fffdfa;
+  scroll-behavior: smooth;
+}
+* {
+  box-sizing: border-box;
+}
+::-webkit-scrollbar {
+  width: 0;
+}
+html {
+  scroll-behavior: smooth;
+}
