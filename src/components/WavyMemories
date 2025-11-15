@@ -1,0 +1,53 @@
+import React from "react";
+import { motion } from "framer-motion";
+import "./WavyMemories.css";
+
+export default function WavyMemories({ memories }) {
+  return (
+    <div className="wavy-section">
+      {/* الخط المتمايل */}
+      <svg
+        width="50"
+        height={memories.length * 320}
+        className="wavy-svg"
+        style={{ position: "absolute", left: "50%" }}
+      >
+        <path
+          d="M25,0 Q40,100 25,200 Q10,300 25,400 Q40,500 25,600 Q10,700 25,800 Q40,900 25,1000"
+          stroke="#e9cdd4"
+          strokeWidth={4}
+          fill="none"
+        />
+      </svg>
+      <div className="memories-list">
+        {memories.map((mem, i) => (
+          <div className="memory-item-container" key={i} style={{ top: i * 140 }}>
+            <motion.div
+              className="memory-item"
+              initial={{ scale: 0.96, opacity: 0.6, filter: "brightness(0.8)" }}
+              whileInView={{
+                scale: 1.12,
+                opacity: 1,
+                filter: "brightness(1.12)",
+              }}
+              transition={{ type: "spring", stiffness: 240, damping: 15 }}
+              viewport={{ amount: 0.5, once: true }}
+            >
+              <div className="img-frame">
+                <img src={mem.image} alt={mem.story} />
+              </div>
+              <motion.div
+                className="story"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.14, duration: 0.7 }}
+              >
+                {mem.story}
+              </motion.div>
+            </motion.div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
