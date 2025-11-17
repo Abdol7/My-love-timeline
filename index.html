@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سنتين من اول لقاء </title>
+    <style>
+        /* التصميم الأساسي */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* تصميم القسم الأول - العداد */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://a.top4top.io/p_3608jxixo1.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            position: relative;
+        }
+        
+        .countdown-container {
+            background: rgba(255, 20, 147, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.3), 0 0 30px rgba(255, 20, 147, 0.5);
+            margin-bottom: 30px;
+            max-width: 600px;
+            width: 90%;
+            border: 1px solid rgba(255, 20, 147, 0.5);
+        }
+        
+        .countdown-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            color: #ff69b4;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            background: rgba(255, 20, 147, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            min-width: 100px;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.2);
+            border: 1px solid rgba(255, 20, 147, 0.3);
+        }
+        
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+            color: #ff69b4;
+        }
+        
+        .countdown-label {
+            font-size: 1rem;
+            margin-top: 5px;
+            color: white;
+        }
+        
+        .love-message {
+            font-size: 1.8rem;
+            margin-top: 30px;
+            max-width: 600px;
+            line-height: 1.8;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+            color: #ff69b4;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* تصميم خط الذكريات */
+        .timeline-section {
+            padding: 80px 20px;
+            background: #fff;
+            position: relative;
+        }
+        
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .timeline-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: #ff6b6b;
+            position: relative;
+        }
+        
+        .timeline-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            border-radius: 2px;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 80px;
+            position: relative;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-item:nth-child(odd) {
+            padding-right: calc(50% + 30px);
+            text-align: left;
+        }
+        
+        .timeline-item:nth-child(even) {
+            padding-left: calc(50% + 30px);
+            text-align: right;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            box-shadow: 0 0 0 5px rgba(255, 107, 107, 0.2);
+            z-index: 1;
+        }
+        
+        .timeline-content {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .timeline-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: all 0.5s ease;
+        }
+        
+        .timeline-img.pop {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .timeline-story {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        /* تصميم قسم الخاتمة */
+        .final-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            text-align: center;
+            color: white;
+        }
+        
+        .final-message {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .final-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .final-text {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+        
+        .final-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* تصميم التذييل */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .countdown-title {
+                font-size: 2rem;
+            }
+            
+            .love-message {
+                font-size: 1.5rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                padding: 0 0 0 70px;
+                text-align: right;
+            }
+            
+            .timeline-dot {
+                left: 21px;
+            }
+            
+            .final-title {
+                font-size: 2rem;
+            }
+            
+            .final-text {
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* تأثيرات إضافية */
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 105, 180, 0.7);
+            transform: rotate(45deg);
+            opacity: 0;
+        }
+        
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 105, 180, 0.7);
+            border-radius: 50%;
+        }
+        
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        
+        .heart:after {
+            top: 0;
+            left: -10px;
+        }
+        
+        /* زر العودة للأعلى */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .scroll-top.visible {
+            opacity: 1;
+        }
+        
+        .scroll-top:hover {
+            background: #ff5252;
+            transform: translateY(-5px);
+        }
+        
+        /* زر الموسيقى */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 105, 180, 0.8);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .music-btn:hover {
+            background: rgba(255, 105, 180, 1);
+            transform: scale(1.1);
+        }
+        
+        .music-btn.playing {
+            background: rgba(255, 20, 147, 0.9);
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- زر تشغيل الموسيقى -->
+    <div class="music-btn" id="musicBtn">
+        ♫
+    </div>
+    
+    <!-- القسم الأول - العداد -->
+    <section class="hero-section">
+        <div class="floating-hearts" id="hearts-container"></div>
+        <div class="countdown-container">
+            <h1 class="countdown-title">سنتين من اول لقاء </h1>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">921</span>
+                    <span class="countdown-label">أيام</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">10</span>
+                    <span class="countdown-label">ساعات</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">30</span>
+                    <span class="countdown-label">دقائق</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">ثواني</span>
+                </div>
+            </div>
+        </div>
+        <p class="love-message">"سنتين و لسى كل يوم بحبك اكتر"</p>
+    </section>
+
+    <!-- قسم خط الذكريات -->
+    <section class="timeline-section">
+        <div class="timeline-container">
+            <h2 class="timeline-title">خط ذكرياتنا</h2>
+            <div class="timeline">
+                <!-- العنصر 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <img src="https://b.top4top.io/s_3606db4a10.jpg" alt="لقاءنا الأول" class="timeline-img">
+                        <p class="timeline-story">كان يومًا لا يُنسى، حين التقينا لأول مرة. كانت عيناك تلمعان بالفضول والأمل، وكلماتنا الأولى كانت بداية قصة جميلة لم نكن نعلم أنها ستستمر لسنتين من الحب.</p>
+                    </div>
+                </div>
+                
+                <!-- العنصر 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <img src="https://j.top4top.io/p_3608bp1b00.jpg" alt="أول رحلة" class="timeline-img">
+                        <p class="timeline-story">في رحلتنا الأولى، اكتشفنا كم نستمتع بوجود بعضنا. الضحكات، المغامرات، واللحظات التي قضيناها معًا جعلتنا ندرك أننا نريد قضاء المزيد من الوقت معًا.</p>
+                    </div>
+                </div>
+                
+                <!-- العنصر 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <img src="https://l.top4top.io/p_3608s845r4.jpg" alt="عيد الحب الأول" class="timeline-img">
+                        <p class="timeline-story">أول عيد حب احتفلنا به معًا كان مميزًا. الهدايا البسيطة والكلمات الرقيقة جعلتنا نشعر بأن الحب الحقيقي ليس في الأشياء المادية، بل في المشاعر الصادقة.</p>
+                    </div>
+                </div>
+                
+                <!-- العنصر 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <img src="https://k.top4top.io/p_3608itmdu3.jpg" alt="تحديات وتغلب" class="timeline-img">
+                        <p class="timeline-story">مررنا بتحديات، لكننا تعلمنا أن الحب الحقيقي ليس فقط في الأوقات السعيدة، بل أيضًا في قدرتنا على تخطي الصعوبات معًا ودعم بعضنا البعض.</p>
+                    </div>
+                </div>
+                
+                <!-- العنصر 5 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <img src="https://j.top4top.io/p_3608ewv4q2.jpg" alt="مناسبات سعيدة" class="timeline-img">
+                        <p class="timeline-story">شاركنا العديد من المناسبات السعيدة معًا. كل احتفال كان فرصة لنعبر عن حبنا وامتناننا لوجود بعضنا في حياتنا.</p>
+                    </div>
+                </div>
+                
+                <!-- العنصر 6 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <img src="https://i.top4top.io/p_36085g99g1.jpg" alt="لحظات هادئة" class="timeline-img">
+                        <p class="timeline-story">أجمل اللحظات كانت تلك الهادئة، عندما كنا نجلس معًا دون الحاجة للكلام، نشعر بالراحة والطمأنينة فقط بوجودنا معًا.</p>
+                    </div>
+                </div>
+                
+                <!-- العنصر 7 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <img src="https://a.top4top.io/p_3608jxixo1.jpg" alt="اليوم" class="timeline-img">
+                        <p class="timeline-story">وها نحن الآن، بعد سنتين من الحب والنمو معًا. كل يوم يمر يجعل علاقتنا أقوى، وحبنا أعمق. أشكر القدر على كل لحظة قضيناها معًا.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الخاتمة -->
+    <section class="final-section">
+        <div class="final-message">
+            <h2 class="final-title">سنتين معًا</h2>
+            <p class="final-text">"سنتين وكل مره نفس الانبهار لمن اشوفك"</p>
+            <p class="final-text">"سنتين ونفس الاحساس مع أحبك"</p>
+            <p class="final-text">"سنتين وانت روح روحي و قمري"</p>
+            <p class="final-text">"سنتين وانت اساس سعادتي"</p>
+            <p class="final-text">"سنتين والعمر لسى في اوله"</p>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer>
+        <p>صنع بكل الحب ❤️ | ذكرى سنتين جميلة</p>
+    </footer>
+
+    <!-- زر العودة للأعلى -->
+    <div class="scroll-top" id="scrollTop">↑</div>
+
+    <!-- عنصر الصوت -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <!-- يمكنك استبدال الرابط أعلاه برابط الموسيقى الذي تريده -->
+    </audio>
+
+    <script>
+        // العداد
+        function updateCountdown() {
+            // تاريخ بداية العلاقة (عد 730 يوم للخلف من اليوم)
+            const startDate = new Date();
+            startDate.setDate(startDate.getDate() -921);
+            
+            const now = new Date();
+            const diff = now - startDate;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        // تحديث العداد كل ثانية
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // تأثير التمرير لخط الذكريات
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const finalTexts = document.querySelectorAll('.final-text');
+        
+        function checkScroll() {
+            // تأثير ظهور عناصر خط الذكريات
+            timelineItems.forEach(item => {
+                const itemTop = item.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (itemTop < windowHeight * 0.85) {
+                    item.classList.add('visible');
+                    
+                    // تأثير pop للصورة عند ظهورها
+                    const img = item.querySelector('.timeline-img');
+                    if (img && !img.classList.contains('pop')) {
+                        img.classList.add('pop');
+                        setTimeout(() => {
+                            img.classList.remove('pop');
+                        }, 600);
+                    }
+                }
+            });
+            
+            // تأثير ظهور النصوص في القسم الأخير
+            finalTexts.forEach((text, index) => {
+                const textTop = text.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (textTop < windowHeight * 0.85) {
+                    setTimeout(() => {
+                        text.classList.add('visible');
+                    }, index * 300);
+                }
+            });
+            
+            // زر العودة للأعلى
+            const scrollTopBtn = document.getElementById('scrollTop');
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        }
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+        
+        // زر العودة للأعلى
+        document.getElementById('scrollTop').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // تأثير القلوب العائمة
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts-container');
+            const heartCount = 15;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                
+                // مواضع وأحجام عشوائية
+                const size = Math.random() * 15 + 10;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 3 + 3;
+                
+                heart.style.width = `${size}px`;
+                heart.style.height = `${size}px`;
+                heart.style.left = `${left}%`;
+                heart.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // إضافة أنيميشن للقلوب العائمة
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0% {
+                    transform: translateY(100vh) rotate(45deg);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 0.7;
+                }
+                90% {
+                    opacity: 0.7;
+                }
+                100% {
+                    transform: translateY(-100px) rotate(45deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // إنشاء القلوب عند تحميل الصفحة
+        window.addEventListener('load', createHearts);
+        
+        // التحكم في الموسيقى
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        let isPlaying = false;
+        
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+                musicBtn.innerHTML = '♫';
+            } else {
+                bgMusic.play().catch(e => {
+                    console.log("لم يتمكن المتصفح من تشغيل الموسيقى تلقائياً:", e);
+                    alert("يرجى النقر على زر التشغيل مرة أخرى للموافقة على تشغيل الموسيقى");
+                });
+                musicBtn.classList.add('playing');
+                musicBtn.innerHTML = '♫';
+            }
+            isPlaying = !isPlaying;
+        });
+        
+        // إضافة حدث لمعالجة أخطاء تشغيل الموسيقى
+        bgMusic.addEventListener('error', (e) => {
+            console.log("حدث خطأ في تحميل الملف الصوتي:", e);
+            alert("تعذر تحميل الملف الصوتي. يرجى التحقق من الرابط أو استخدام ملف صوتي آخر.");
+        });
+    </script>
+</body>
+</html>
